@@ -30,16 +30,22 @@ export const hero = {
   support:
     "Building a connected business ecosystem across industries, starting from India and reaching the world.",
   primaryCta: { label: "Explore the Ecosystem", href: "#ecosystem" },
-  secondaryCta: { label: "Our Vision", href: "#concept" },
+  secondaryCta: { label: "Our Vision", href: "#idea" },
 };
 
 export const intro = {
-  headline: "One Industry Isn't Enough.",
-  lead: "Different industries. Different needs. One connected ecosystem.",
-  body: [
-    "Most businesses operate inside a single lane. A garment supplier rarely meets a construction distributor. An agricultural producer rarely meets the technology team that could transform their operation.",
-    "One For All 360° is being built to close those gaps — to connect industries instead of running each one in isolation.",
+  label: "01 — The Idea",
+  headline: ["Industries", "don't exist", "in isolation."],
+  names: [
+    "Garments.",
+    "Agriculture.",
+    "Construction.",
+    "Technology.",
+    "Manufacturing.",
+    "Services.",
   ],
+  turn: "Everything connects.",
+  close: "That's One For All ",
 };
 
 export const concept = {
@@ -55,7 +61,8 @@ export const concept = {
 };
 
 export const industriesSection = {
-  headline: "Our Ecosystem",
+  label: "02 — The Ecosystem",
+  headline: ["One ecosystem.", "Multiple possibilities."],
   lead: "Multiple industries. One growing ecosystem.",
   closingHeadline: "And we're just getting started.",
   closingNote: "More industries are coming.",

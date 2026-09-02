@@ -208,6 +208,43 @@
   }
   .reveal[data-shown="true"] { opacity: 1; transform: none; }
 
+  /* ---- Line slide reveal ---- */
+  .line-slide {
+    display: block;
+    opacity: 0;
+    transform: translateY(0.9em);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .line-slide[data-shown="true"] { opacity: 1; transform: none; }
+
+  /* ---- Idea section ---- */
+  .idea-name {
+    display: block;
+    color: color-mix(in srgb, var(--color-ink) 22%, transparent);
+    transition: color 0.55s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .idea-row[data-active="true"] .idea-name {
+    color: var(--color-ink);
+    transform: translateX(0.4rem);
+  }
+
+  .idea-rule {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .idea-row[data-active="true"] .idea-rule { transform: scaleX(1); }
+
+  .idea-count {
+    color: color-mix(in srgb, var(--color-ink) 20%, transparent);
+    transition: color 0.55s ease;
+  }
+  .idea-row[data-active="true"] .idea-count { color: var(--color-accent); }
+
   /* ---- Hero entrance ---- */
   @keyframes ofa-rise {
     from { opacity: 0; transform: translateY(22px); }

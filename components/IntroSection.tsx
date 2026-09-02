@@ -1,37 +1,45 @@
+import RevealLine from "./RevealLine";
+import IdeaNames from "./IdeaNames";
 import Reveal from "./Reveal";
 import { intro } from "@/content/site";
 
 export default function IntroSection() {
   return (
-    <section className="py-24 md:py-32 lg:py-40">
-      <div className="shell">
-        <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
-          <div className="lg:col-span-7">
-            <Reveal>
-              <p className="index-num text-ink/35">01 — WHY</p>
-            </Reveal>
+    <section id="idea" className="relative">
+      <div className="py-28 md:py-40">
+        <div className="shell">
+          <Reveal>
+            <p className="index-num text-ink/35">{intro.label}</p>
+          </Reveal>
 
-            <Reveal delay={80}>
-              <h2 className="display mt-8 max-w-[11ch] text-[2.75rem] sm:text-6xl lg:text-7xl">{intro.headline}</h2>
-            </Reveal>
-
-            <Reveal delay={140}>
-              <div className="mt-10 h-px w-24 bg-accent" />
-            </Reveal>
-          </div>
-
-          <div className="lg:col-span-4 lg:col-start-9 lg:pt-28">
-            <Reveal delay={160}>
-              <p className="text-xl leading-snug font-medium md:text-2xl">{intro.lead}</p>
-            </Reveal>
-
-            <div className="mt-8 space-y-5">
-              {intro.body.map((paragraph, i) => (
-                <Reveal key={i} delay={220 + i * 80}>
-                  <p className="text-base leading-relaxed text-ink/60">{paragraph}</p>
-                </Reveal>
-              ))}
+          <div className="mt-14 grid gap-y-20 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-0">
+            <div className="lg:col-span-6">
+              <h2 className="display text-[clamp(2.5rem,6.5vw,5.25rem)] lg:sticky lg:top-36">
+                {intro.headline.map((line, i) => (
+                  <RevealLine key={line} delay={i * 110}>{line}</RevealLine>
+                ))}
+              </h2>
             </div>
+
+            <div className="lg:col-span-5 lg:col-start-8 lg:pt-6">
+              <IdeaNames />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-ink py-28 text-paper md:py-44">
+        <div className="shell text-center">
+          <h3 className="display text-[clamp(2.5rem,8vw,6.5rem)]">
+            <RevealLine>{intro.turn}</RevealLine>
+          </h3>
+
+          <div className="mx-auto mt-14 h-px w-24 bg-accent md:mt-20" aria-hidden="true" />
+
+          <div className="mt-14 md:mt-20">
+            <RevealLine delay={140}>
+              <span className="block text-[clamp(1.125rem,2.4vw,1.75rem)] font-medium tracking-[-0.02em] text-paper/50">{intro.close}<span className="text-accent">360°</span></span>
+            </RevealLine>
           </div>
         </div>
       </div>
