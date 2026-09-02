@@ -284,7 +284,7 @@
     transform: none;
   }
 
-  /* ---- Idea backdrop motion ---- */
+  /* ---- Backdrop motion ---- */
   @keyframes ofa-orbit-cw { to { transform: rotate(360deg); } }
   @keyframes ofa-orbit-ccw { to { transform: rotate(-360deg); } }
   @keyframes ofa-drift {
@@ -314,49 +314,136 @@
   /* ---- Interactive ecosystem ---- */
   .eco-node { cursor: pointer; }
 
-  .eco-dot {
-    transition: r 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-      fill 0.45s ease, stroke 0.45s ease, opacity 0.45s ease;
+  .eco-badge {
+    transform-origin: 0 0;
+    transition: transform 0.55s cubic-bezier(0.34, 1.4, 0.5, 1);
+  }
+  .eco-ring {
+    transition: stroke 0.45s ease, opacity 0.45s ease, stroke-width 0.45s ease;
+  }
+  .eco-icon {
+    color: var(--color-ink);
+    transition: color 0.45s ease, opacity 0.45s ease;
   }
   .eco-label {
     transition: opacity 0.45s ease, fill 0.45s ease;
     letter-spacing: 1.6px;
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 500;
   }
   .eco-spoke {
     transition: opacity 0.5s ease, stroke 0.5s ease, stroke-width 0.5s ease;
   }
 
-  .eco-node[data-state="on"] .eco-dot {
-    fill: var(--color-accent);
-    stroke: var(--color-accent);
+  /* idle breathing halo */
+  @keyframes ofa-pulse {
+    0%, 100% { opacity: 0; transform: scale(1); }
+    50%      { opacity: 0.3; transform: scale(1.32); }
   }
-  .eco-node[data-state="on"] .eco-label {
-    opacity: 1;
-    fill: var(--color-ink);
+  .eco-halo {
+    transform-origin: 0 0;
+    opacity: 0;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1;
+    pointer-events: none;
+  }
+  .eco-node[data-state="idle"] .eco-halo {
+    animation: ofa-pulse 4s ease-in-out infinite;
+  }
+
+  /* hover ripple expanding outward */
+  @keyframes ofa-ripple {
+    0%   { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0;   transform: scale(2.1); }
+  }
+  .eco-ripple {
+    transform-origin: 0 0;
+    opacity: 0;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.2;
+    pointer-events: none;
+  }
+  .eco-node[data-state="on"] .eco-ripple {
+    animation: ofa-ripple 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* selected connection travels outward */
+  @keyframes ofa-travel {
+    from { stroke-dashoffset: 120; }
+    to   { stroke-dashoffset: 0; }
   }
   .eco-node[data-state="on"] .eco-spoke {
-    opacity: 0.85;
+    opacity: 0.9;
     stroke: var(--color-accent);
-    stroke-width: 1.5;
+    stroke-width: 1.6;
+    stroke-dasharray: 120;
+    animation: ofa-travel 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .eco-node[data-state="off"] .eco-dot { opacity: 0.3; }
-  .eco-node[data-state="off"] .eco-label { opacity: 0.22; }
-  .eco-node[data-state="off"] .eco-spoke { opacity: 0.07; }
+  .eco-node[data-state="on"] .eco-badge { transform: scale(1.22); }
+  .eco-node[data-state="on"] .eco-ring {
+    stroke: var(--color-accent);
+    stroke-width: 1.3;
+  }
+  .eco-node[data-state="on"] .eco-icon { color: var(--color-accent); }
+  .eco-node[data-state="on"] .eco-label { opacity: 1; fill: var(--color-ink); }
 
-  .eco-node[data-state="idle"] .eco-dot { opacity: 0.85; }
-  .eco-node[data-state="idle"] .eco-label { opacity: 0.5; }
-  .eco-node[data-state="idle"] .eco-spoke { opacity: 0.16; }
+  .eco-node[data-state="off"] .eco-badge { transform: scale(0.9); }
+  .eco-node[data-state="off"] .eco-ring { opacity: 0.28; }
+  .eco-node[data-state="off"] .eco-icon { opacity: 0.22; }
+  .eco-node[data-state="off"] .eco-label { opacity: 0.18; }
+  .eco-node[data-state="off"] .eco-spoke { opacity: 0.06; }
 
-  .eco-panel {
+  .eco-node[data-state="idle"] .eco-ring { opacity: 0.7; }
+  .eco-node[data-state="idle"] .eco-icon { opacity: 0.65; }
+  .eco-node[data-state="idle"] .eco-label { opacity: 0.45; }
+  .eco-node[data-state="idle"] .eco-spoke { opacity: 0.14; }
+
+  /* core reacts to selection */
+  .eco-core {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .eco-stage[data-live="true"] .eco-core { transform: scale(1.04); }
+
+  /* panel entrance, staggered */
+  .eco-panel > * {
     opacity: 0;
-    transform: translateY(10px);
-    animation: ofa-panel 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translateY(12px);
+    animation: ofa-panel 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+  .eco-panel > *:nth-child(1) { animation-delay: 0.02s; }
+  .eco-panel > *:nth-child(2) { animation-delay: 0.09s; }
+  .eco-panel > *:nth-child(3) { animation-delay: 0.16s; }
+  .eco-panel > *:nth-child(4) { animation-delay: 0.23s; }
+  .eco-panel > *:nth-child(5) { animation-delay: 0.3s; }
+
   @keyframes ofa-panel {
     to { opacity: 1; transform: none; }
+  }
+
+  .eco-tag {
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: ofa-tag 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: color 0.35s ease, padding-left 0.35s ease;
+  }
+  @keyframes ofa-tag {
+    to { opacity: 1; transform: none; }
+  }
+  .eco-tag:hover {
+    color: var(--color-accent);
+    padding-left: 0.5rem;
+  }
+  .eco-tag-dash {
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
+  }
+  .eco-tag:hover .eco-tag-dash {
+    width: 2rem;
+    background-color: var(--color-accent);
   }
 
   /* ---- Hero entrance ---- */

@@ -2,6 +2,7 @@ export type Industry = {
   num: string;
   name: string;
   short: string;
+  tagline: string;
   body: string;
   tags: string[];
 };
@@ -33,6 +34,13 @@ export const hero = {
   primaryCta: { label: "Explore the Ecosystem", href: "#ecosystem" },
   secondaryCta: { label: "Our Vision", href: "#idea" },
 };
+
+export const heroFeatures = [
+  { title: "Multiple Industries", note: "One unified ecosystem." },
+  { title: "Endless Opportunities", note: "Grow. Connect. Scale." },
+  { title: "From India to World", note: "Local roots. Global reach." },
+  { title: "Future Ready", note: "Innovation. Impact. Growth." },
+];
 
 export const intro = {
   label: "01 — The Idea",
@@ -74,6 +82,7 @@ export const industries: Industry[] = [
     num: "01",
     name: "Garments",
     short: "GARMENTS",
+    tagline: "Designing comfort. Delivering quality.",
     body: "Connecting products, sourcing and opportunities across the apparel ecosystem.",
     tags: ["Products", "Manufacturing", "Sourcing", "Distribution"],
   },
@@ -81,6 +90,7 @@ export const industries: Industry[] = [
     num: "02",
     name: "Construction",
     short: "CONSTRUCTION",
+    tagline: "Building stronger. Building better.",
     body: "Connecting products, materials, services and opportunities across construction.",
     tags: ["Materials", "Services", "Supply", "Projects"],
   },
@@ -88,6 +98,7 @@ export const industries: Industry[] = [
     num: "03",
     name: "Agriculture",
     short: "AGRICULTURE",
+    tagline: "Growing today. Nourishing tomorrow.",
     body: "Connecting agricultural products, solutions and opportunities.",
     tags: ["Produce", "Solutions", "Supply", "Markets"],
   },
@@ -95,6 +106,7 @@ export const industries: Industry[] = [
     num: "04",
     name: "IT & Technology",
     short: "IT & TECHNOLOGY",
+    tagline: "Innovating now. Transforming always.",
     body: "Building connections through digital solutions, technology and innovation.",
     tags: ["Software", "Systems", "Innovation", "Support"],
   },
@@ -102,6 +114,7 @@ export const industries: Industry[] = [
     num: "05",
     name: "Manufacturing",
     short: "MANUFACTURING",
+    tagline: "Producing excellence. Powering progress.",
     body: "Connecting production, sourcing, supply and business opportunities.",
     tags: ["Production", "Sourcing", "Supply", "Partners"],
   },
@@ -109,6 +122,7 @@ export const industries: Industry[] = [
     num: "06",
     name: "Services",
     short: "SERVICES",
+    tagline: "Empowering people. Enriching lives.",
     body: "Connecting people and businesses with the services they need.",
     tags: ["Business", "Technical", "Logistics", "Support"],
   },
