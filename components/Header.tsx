@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Logo from "./Logo";
+import PillLink from "./PillLink";
+import { useActiveSection } from "./useActiveSection";
 import { nav } from "@/content/site";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const ids = useMemo(() => nav.map((item) => item.href.replace("#", "")), []);
+  const active = useActiveSection(ids);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -42,7 +47,7 @@ export default function Header() {
   const panelBase = "fixed inset-0 z-50 bg-ink transition-opacity duration-500 lg:hidden";
   const panelState = open ? "opacity-100" : "pointer-events-none opacity-0";
 
-  const linkBase = "block py-3 text-4xl font-semibold tracking-[-0.03em] text-paper transition-all duration-500 sm:text-5xl";
+  const linkBase = "block text-4xl font-semibold tracking-[-0.03em] transition-all duration-500 sm:text-5xl";
   const linkState = open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0";
 
   return (
@@ -50,21 +55,25 @@ export default function Header() {
       <header className={shellBase + " " + shellSkin}>
         <div className={barBase + " " + barSize}>
           <a href="#top" aria-label="One For All 360 home">
-            <Logo />
+            <Logo size={scrolled ? 34 : 40} />
           </a>
 
           <nav aria-label="Primary" className="hidden lg:block">
             <ul className="flex items-center gap-9">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="nav-link text-sm text-ink/70 transition-colors hover:text-ink">{item.label}</a>
-                </li>
-              ))}
+              {nav.map((item) => {
+                const isActive = active === item.href.replace("#", "");
+                const tone = isActive ? "text-accent" : "text-ink/60 hover:text-ink";
+                return (
+                  <li key={item.href}>
+                    <a href={item.href} aria-current={isActive ? "true" : undefined} className={"nav-link text-sm transition-colors duration-300 " + tone}>{item.label}</a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href="#partners" className="frame-btn hidden sm:inline-flex">Partner With Us</a>
+            <PillLink href="#partners" label="Partner With Us" variant="solid" small className="hidden sm:inline-flex" />
 
             <button type="button" onClick={toggle} aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? "Close menu" : "Open menu"} className="relative z-60 flex h-10 w-10 items-center justify-center lg:hidden">
               <span className="relative block h-3 w-6">
@@ -81,17 +90,25 @@ export default function Header() {
           <div className="h-10" />
 
           <nav aria-label="Mobile">
-            <ul className="space-y-1">
-              {nav.map((item, i) => (
-                <li key={item.href}>
-                  <a href={item.href} onClick={close} tabIndex={open ? 0 : -1} style={{ transitionDelay: open ? 120 + i * 60 + "ms" : "0ms" }} className={linkBase + " " + linkState}>{item.label}</a>
-                </li>
-              ))}
+            <ul>
+              {nav.map((item, i) => {
+                const isActive = active === item.href.replace("#", "");
+                const tone = isActive ? "text-accent" : "text-paper";
+                const num = i < 9 ? "0" + (i + 1) : String(i + 1);
+                return (
+                  <li key={item.href} className="border-b border-paper/10">
+                    <a href={item.href} onClick={close} tabIndex={open ? 0 : -1} style={{ transitionDelay: open ? 120 + i * 55 + "ms" : "0ms" }} className={"flex items-baseline gap-5 py-4 " + linkState}>
+                      <span className="index-num text-paper/30">{num}</span>
+                      <span className={linkBase + " " + tone}>{item.label}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
           <div className="space-y-6">
-            <a href="#partners" onClick={close} tabIndex={open ? 0 : -1} className="frame-btn frame-btn-invert w-full justify-center text-paper">Partner With Us</a>
+            <PillLink href="#partners" label="Partner With Us" variant="line" className="w-full !border-paper/30 !text-paper" />
             <p className="eyebrow text-paper/40">Everything. One Place.</p>
           </div>
         </div>

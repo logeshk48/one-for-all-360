@@ -10,10 +10,7 @@ const ANGLES = [-90, -30, 30, 90, 150, 210];
 
 function point(angle: number, radius: number) {
   const rad = (angle * Math.PI) / 180;
-  return {
-    x: CX + radius * Math.cos(rad),
-    y: CY + radius * Math.sin(rad),
-  };
+  return { x: CX + radius * Math.cos(rad), y: CY + radius * Math.sin(rad) };
 }
 
 const nodes = industries.map((industry, i) => {
@@ -43,115 +40,30 @@ const nodes = industries.map((industry, i) => {
 const arcStart = point(-115, R_OUTER);
 const arcEnd = point(-50, R_OUTER);
 
-export default function EcosystemVisual() {
+export default function EcosystemVisual({ backdrop = false }: { backdrop?: boolean }) {
+  const labelClass = backdrop ? "hidden" : "max-lg:hidden";
+  const ariaLabel = "A 360 degree ecosystem diagram connecting garments, construction, agriculture, IT and technology, manufacturing, and services.";
+
   return (
     <div className="w-full">
-      <svg
-        viewBox="0 0 640 560"
-        className="h-auto w-full"
-        role="img"
-        aria-label="A 360° ecosystem diagram connecting garments, construction, agriculture, IT and technology, manufacturing, and services."
-      >
-        {/* Outer ring */}
-        <circle
-          cx={CX}
-          cy={CY}
-          r={R_OUTER}
-          fill="none"
-          stroke="var(--color-ink)"
-          strokeWidth="1"
-          opacity="0.16"
-        />
+      <svg viewBox="0 0 640 560" className="h-auto w-full" role="img" aria-label={ariaLabel}>
+        <circle cx={CX} cy={CY} r={R_OUTER} fill="none" stroke="var(--color-ink)" strokeWidth="1" opacity="0.16" />
 
-        {/* Accent arc — the 360° signature */}
-        <path
-          d={`M ${arcStart.x} ${arcStart.y} A ${R_OUTER} ${R_OUTER} 0 0 1 ${arcEnd.x} ${arcEnd.y}`}
-          fill="none"
-          stroke="var(--color-accent)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          className="arc-draw"
-        />
+        <path d={"M " + arcStart.x + " " + arcStart.y + " A " + R_OUTER + " " + R_OUTER + " 0 0 1 " + arcEnd.x + " " + arcEnd.y} fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" className="arc-draw" />
 
-        {/* Slow rotating dashed ring */}
-        <circle
-          cx={CX}
-          cy={CY}
-          r={R_DASH}
-          fill="none"
-          stroke="var(--color-ink)"
-          strokeWidth="1"
-          strokeDasharray="2 10"
-          opacity="0.28"
-          className="ring-rotate"
-        />
+        <circle cx={CX} cy={CY} r={R_DASH} fill="none" stroke="var(--color-ink)" strokeWidth="1" strokeDasharray="2 10" opacity="0.28" className="ring-rotate" />
 
-        {/* Connectors + nodes */}
         {nodes.map((node, i) => (
-          <g
-            key={node.short}
-            className="node-in"
-            style={{ animationDelay: `${500 + i * 110}ms` }}
-          >
-            <line
-              x1={node.lineStart.x}
-              y1={node.lineStart.y}
-              x2={node.lineEnd.x}
-              y2={node.lineEnd.y}
-              stroke="var(--color-ink)"
-              strokeWidth="1"
-              opacity="0.18"
-            />
-            <circle
-              cx={node.outer.x}
-              cy={node.outer.y}
-              r="4.5"
-              fill="var(--color-paper)"
-              stroke="var(--color-ink)"
-              strokeWidth="1.25"
-            />
-            <text
-              x={node.labelX}
-              y={node.labelY}
-              textAnchor={node.anchor}
-              className="max-lg:hidden"
-              fill="var(--color-ink)"
-              fontSize="11"
-              fontWeight="500"
-              letterSpacing="1.6"
-              opacity="0.6"
-            >
-              {node.short}
-            </text>
+          <g key={node.short} className="node-in" style={{ animationDelay: 500 + i * 110 + "ms" }}>
+            <line x1={node.lineStart.x} y1={node.lineStart.y} x2={node.lineEnd.x} y2={node.lineEnd.y} stroke="var(--color-ink)" strokeWidth="1" opacity="0.18" />
+            <circle cx={node.outer.x} cy={node.outer.y} r="4.5" fill="var(--color-paper)" stroke="var(--color-ink)" strokeWidth="1.25" />
+            <text x={node.labelX} y={node.labelY} textAnchor={node.anchor} className={labelClass} fill="var(--color-ink)" fontSize="11" fontWeight="500" letterSpacing="1.6" opacity="0.6">{node.short}</text>
           </g>
         ))}
 
-        {/* Core */}
         <circle cx={CX} cy={CY} r={R_CORE} fill="var(--color-ink)" />
-        <text
-          x={CX}
-          y={CY - 18}
-          textAnchor="middle"
-          fill="var(--color-paper)"
-          fontSize="9"
-          fontWeight="500"
-          letterSpacing="2.2"
-          opacity="0.55"
-        >
-          ONE FOR ALL
-        </text>
-        <text
-          x={CX}
-          y={CY + 22}
-          textAnchor="middle"
-          fill="var(--color-paper)"
-          fontSize="44"
-          fontWeight="600"
-          letterSpacing="-1.5"
-        >
-          360
-          <tspan fill="var(--color-accent)">°</tspan>
-        </text>
+        <text x={CX} y={CY - 18} textAnchor="middle" fill="var(--color-paper)" fontSize="9" fontWeight="500" letterSpacing="2.2" opacity="0.55">ONE FOR ALL</text>
+        <text x={CX} y={CY + 22} textAnchor="middle" fill="var(--color-paper)" fontSize="44" fontWeight="600" letterSpacing="-1.5">360<tspan fill="var(--color-accent)">°</tspan></text>
       </svg>
     </div>
   );

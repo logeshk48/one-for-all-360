@@ -1,44 +1,15 @@
 type LogoProps = {
-  invert?: boolean;
+  size?: number;
   className?: string;
 };
 
-export default function Logo({ invert = false, className = "" }: LogoProps) {
-  const stroke = invert ? "var(--color-paper)" : "var(--color-ink)";
-
+export default function Logo({ size = 38, className = "" }: LogoProps) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <svg
-        width="26"
-        height="26"
-        viewBox="0 0 26 26"
-        fill="none"
-        aria-hidden="true"
-        className="shrink-0"
-      >
-        <circle
-          cx="13"
-          cy="13"
-          r="11"
-          stroke={stroke}
-          strokeWidth="1.25"
-          opacity="0.35"
-        />
-        <path
-          d="M13 2 A 11 11 0 0 1 24 13"
-          stroke="var(--color-accent)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <circle cx="13" cy="13" r="2.75" fill={stroke} />
+    <span className={"inline-flex items-center gap-2.5 " + className}>
+      <svg viewBox="320 240 615 590" width={size} height={size} aria-hidden="true" className="shrink-0">
+        <image href="/logo.svg" x="0" y="0" width="1254" height="1254" />
       </svg>
-      <span
-        className="whitespace-nowrap text-[0.8125rem] font-semibold tracking-[0.14em]"
-        style={{ color: stroke }}
-      >
-        ONE FOR ALL <span className="text-accent">360°</span>
-      </span>
+      <span className="whitespace-nowrap text-[1.0625rem] font-semibold tracking-[-0.015em] text-ink">OneForAll<span className="text-accent">360</span></span>
     </span>
   );
 }
