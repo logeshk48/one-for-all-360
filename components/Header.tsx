@@ -64,7 +64,7 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href="#partners" className="btn btn-primary btn-sm hidden sm:inline-flex">Partner With Us</a>
+            <a href="#partners" className="frame-btn hidden sm:inline-flex">Partner With Us</a>
 
             <button type="button" onClick={toggle} aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? "Close menu" : "Open menu"} className="relative z-60 flex h-10 w-10 items-center justify-center lg:hidden">
               <span className="relative block h-3 w-6">
@@ -91,7 +91,7 @@ export default function Header() {
           </nav>
 
           <div className="space-y-6">
-            <a href="#partners" onClick={close} tabIndex={open ? 0 : -1} className="btn btn-invert w-full">Partner With Us</a>
+            <a href="#partners" onClick={close} tabIndex={open ? 0 : -1} className="frame-btn frame-btn-invert w-full justify-center text-paper">Partner With Us</a>
             <p className="eyebrow text-paper/40">Everything. One Place.</p>
           </div>
         </div>

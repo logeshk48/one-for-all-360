@@ -128,7 +128,7 @@ export const areasSection = {
 };
 
 export const globalVision = {
-  headline: ["Starting in India.", "Thinking Global."],
+  headline: ["Born from India.", "Built for the world."],
   support: "Our journey begins in India. Our ambition doesn't end there.",
 };
 
