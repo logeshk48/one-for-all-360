@@ -58,14 +58,14 @@
   /* ---- Hero background ---- */
   .hero-glow {
     background:
-      radial-gradient(110% 70% at 50% 0%, rgba(242, 96, 12, 0.10) 0%, transparent 58%),
-      radial-gradient(80% 55% at 50% 100%, rgba(10, 10, 10, 0.045) 0%, transparent 62%);
+      radial-gradient(125% 85% at 50% -8%, rgba(242, 96, 12, 0.055) 0%, transparent 62%),
+      radial-gradient(100% 70% at 50% 108%, rgba(10, 10, 10, 0.03) 0%, transparent 66%);
   }
 
   .hero-grid {
     background-image:
-      linear-gradient(to right, rgba(10, 10, 10, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(10, 10, 10, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, rgba(10, 10, 10, 0.028) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 10, 10, 0.028) 1px, transparent 1px);
     background-size: 104px 104px;
     mask-image: radial-gradient(78% 62% at 50% 42%, #000 5%, transparent 76%);
     -webkit-mask-image: radial-gradient(78% 62% at 50% 42%, #000 5%, transparent 76%);
@@ -73,7 +73,7 @@
 
   .hero-grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
-    opacity: 0.45;
+    opacity: 0.3;
     mix-blend-mode: multiply;
   }
 
@@ -219,31 +219,145 @@
   .line-slide[data-shown="true"] { opacity: 1; transform: none; }
 
   /* ---- Idea section ---- */
+  .idea-row { cursor: default; }
+
+  .idea-wash {
+    position: absolute;
+    inset: -0.2rem -1rem;
+    background-color: var(--color-accent);
+    opacity: 0;
+    transform: scaleX(0.94);
+    transform-origin: left;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .idea-row:hover .idea-wash {
+    opacity: 0.05;
+    transform: scaleX(1);
+  }
+
   .idea-name {
     display: block;
-    color: color-mix(in srgb, var(--color-ink) 22%, transparent);
-    transition: color 0.55s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateX(-1.5rem);
+    color: var(--color-ink);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .idea-row[data-active="true"] .idea-name {
-    color: var(--color-ink);
-    transform: translateX(0.4rem);
+    opacity: 1;
+    transform: none;
+  }
+  .idea-row[data-active="true"]:hover .idea-name {
+    transform: translateX(0.6rem);
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .idea-rule {
     height: 1px;
     width: 100%;
-    background-color: var(--color-accent);
+    background-color: color-mix(in srgb, var(--color-ink) 12%, transparent);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.5s ease;
   }
   .idea-row[data-active="true"] .idea-rule { transform: scaleX(1); }
+  .idea-row:hover .idea-rule { background-color: var(--color-accent); }
 
   .idea-count {
-    color: color-mix(in srgb, var(--color-ink) 20%, transparent);
-    transition: color 0.55s ease;
+    opacity: 0;
+    color: color-mix(in srgb, var(--color-ink) 28%, transparent);
+    transition: opacity 0.8s ease, color 0.45s ease;
   }
-  .idea-row[data-active="true"] .idea-count { color: var(--color-accent); }
+  .idea-row[data-active="true"] .idea-count { opacity: 1; }
+  .idea-row:hover .idea-count { color: var(--color-accent); }
+
+  .idea-arrow {
+    color: var(--color-accent);
+    opacity: 0;
+    transform: translateX(-0.9rem);
+    transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .idea-row[data-active="true"]:hover .idea-arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---- Idea backdrop motion ---- */
+  @keyframes ofa-orbit-cw { to { transform: rotate(360deg); } }
+  @keyframes ofa-orbit-ccw { to { transform: rotate(-360deg); } }
+  @keyframes ofa-drift {
+    0%   { transform: translateY(0) rotate(0deg); }
+    50%  { transform: translateY(-14px) rotate(6deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  .orbit-slow {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: ofa-orbit-cw 150s linear infinite;
+  }
+  .orbit-mid {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: ofa-orbit-ccw 95s linear infinite;
+  }
+  .orbit-fast {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: ofa-orbit-cw 60s linear infinite;
+  }
+  .drift { animation: ofa-drift 18s ease-in-out infinite; }
+  .drift-slow { animation: ofa-drift 26s ease-in-out infinite; }
+
+  /* ---- Interactive ecosystem ---- */
+  .eco-node { cursor: pointer; }
+
+  .eco-dot {
+    transition: r 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.45s ease, stroke 0.45s ease, opacity 0.45s ease;
+  }
+  .eco-label {
+    transition: opacity 0.45s ease, fill 0.45s ease;
+    letter-spacing: 1.6px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .eco-spoke {
+    transition: opacity 0.5s ease, stroke 0.5s ease, stroke-width 0.5s ease;
+  }
+
+  .eco-node[data-state="on"] .eco-dot {
+    fill: var(--color-accent);
+    stroke: var(--color-accent);
+  }
+  .eco-node[data-state="on"] .eco-label {
+    opacity: 1;
+    fill: var(--color-ink);
+  }
+  .eco-node[data-state="on"] .eco-spoke {
+    opacity: 0.85;
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+  }
+
+  .eco-node[data-state="off"] .eco-dot { opacity: 0.3; }
+  .eco-node[data-state="off"] .eco-label { opacity: 0.22; }
+  .eco-node[data-state="off"] .eco-spoke { opacity: 0.07; }
+
+  .eco-node[data-state="idle"] .eco-dot { opacity: 0.85; }
+  .eco-node[data-state="idle"] .eco-label { opacity: 0.5; }
+  .eco-node[data-state="idle"] .eco-spoke { opacity: 0.16; }
+
+  .eco-panel {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: ofa-panel 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes ofa-panel {
+    to { opacity: 1; transform: none; }
+  }
 
   /* ---- Hero entrance ---- */
   @keyframes ofa-rise {

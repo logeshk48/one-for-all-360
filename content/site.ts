@@ -3,6 +3,7 @@ export type Industry = {
   name: string;
   short: string;
   body: string;
+  tags: string[];
 };
 
 export type SocialLink = {
@@ -74,36 +75,42 @@ export const industries: Industry[] = [
     name: "Garments",
     short: "GARMENTS",
     body: "Connecting products, sourcing and opportunities across the apparel ecosystem.",
+    tags: ["Products", "Manufacturing", "Sourcing", "Distribution"],
   },
   {
     num: "02",
     name: "Construction",
     short: "CONSTRUCTION",
     body: "Connecting products, materials, services and opportunities across construction.",
+    tags: ["Materials", "Services", "Supply", "Projects"],
   },
   {
     num: "03",
     name: "Agriculture",
     short: "AGRICULTURE",
     body: "Connecting agricultural products, solutions and opportunities.",
+    tags: ["Produce", "Solutions", "Supply", "Markets"],
   },
   {
     num: "04",
     name: "IT & Technology",
     short: "IT & TECHNOLOGY",
     body: "Building connections through digital solutions, technology and innovation.",
+    tags: ["Software", "Systems", "Innovation", "Support"],
   },
   {
     num: "05",
     name: "Manufacturing",
     short: "MANUFACTURING",
     body: "Connecting production, sourcing, supply and business opportunities.",
+    tags: ["Production", "Sourcing", "Supply", "Partners"],
   },
   {
     num: "06",
     name: "Services",
     short: "SERVICES",
     body: "Connecting people and businesses with the services they need.",
+    tags: ["Business", "Technical", "Logistics", "Support"],
   },
 ];
 
