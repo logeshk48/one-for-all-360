@@ -284,6 +284,43 @@
     transform: none;
   }
 
+  /* ---- Journey stages ---- */
+  .stage-num {
+    color: color-mix(in srgb, var(--color-ink) 25%, transparent);
+    transition: color 0.5s ease;
+  }
+  .stage-name {
+    color: color-mix(in srgb, var(--color-ink) 30%, transparent);
+    transition: color 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stage-body {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease,
+      max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      margin-top 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .stage-row[data-state="on"] .stage-num { color: var(--color-accent); }
+  .stage-row[data-state="on"] .stage-name {
+    color: var(--color-ink);
+    transform: translateX(0.4rem);
+  }
+  .stage-row[data-state="on"] .stage-body {
+    opacity: 1;
+    max-height: 8rem;
+    margin-top: 0.75rem;
+  }
+
+  .stage-row[data-state="past"] .stage-num {
+    color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  }
+  .stage-row[data-state="past"] .stage-name {
+    color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  }
+
   /* ---- Backdrop motion ---- */
   @keyframes ofa-orbit-cw { to { transform: rotate(360deg); } }
   @keyframes ofa-orbit-ccw { to { transform: rotate(-360deg); } }
@@ -319,43 +356,34 @@
     transition: transform 0.55s cubic-bezier(0.34, 1.4, 0.5, 1);
   }
   .eco-ring {
-    transition: stroke 0.45s ease, opacity 0.45s ease, stroke-width 0.45s ease;
+    transition: stroke 0.45s ease, opacity 0.45s ease, stroke-width 0.45s ease,
+      fill 0.45s ease;
   }
   .eco-icon {
     color: var(--color-ink);
     transition: color 0.45s ease, opacity 0.45s ease;
   }
   .eco-label {
+    fill: var(--color-ink);
     transition: opacity 0.45s ease, fill 0.45s ease;
-    letter-spacing: 1.6px;
+    letter-spacing: 1.5px;
     font-size: 10.5px;
+    font-weight: 500;
+  }
+  .eco-num {
+    fill: var(--color-accent);
+    transition: opacity 0.45s ease;
+    letter-spacing: 1.2px;
+    font-size: 9px;
     font-weight: 500;
   }
   .eco-spoke {
     transition: opacity 0.5s ease, stroke 0.5s ease, stroke-width 0.5s ease;
   }
 
-  /* idle breathing halo */
-  @keyframes ofa-pulse {
-    0%, 100% { opacity: 0; transform: scale(1); }
-    50%      { opacity: 0.3; transform: scale(1.32); }
-  }
-  .eco-halo {
-    transform-origin: 0 0;
-    opacity: 0;
-    fill: none;
-    stroke: var(--color-accent);
-    stroke-width: 1;
-    pointer-events: none;
-  }
-  .eco-node[data-state="idle"] .eco-halo {
-    animation: ofa-pulse 4s ease-in-out infinite;
-  }
-
-  /* hover ripple expanding outward */
   @keyframes ofa-ripple {
-    0%   { opacity: 0.5; transform: scale(1); }
-    100% { opacity: 0;   transform: scale(2.1); }
+    0%   { opacity: 0.45; transform: scale(1); }
+    100% { opacity: 0;   transform: scale(2); }
   }
   .eco-ripple {
     transform-origin: 0 0;
@@ -369,47 +397,44 @@
     animation: ofa-ripple 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* selected connection travels outward */
   @keyframes ofa-travel {
-    from { stroke-dashoffset: 120; }
+    from { stroke-dashoffset: 130; }
     to   { stroke-dashoffset: 0; }
   }
   .eco-node[data-state="on"] .eco-spoke {
-    opacity: 0.9;
+    opacity: 1;
     stroke: var(--color-accent);
-    stroke-width: 1.6;
-    stroke-dasharray: 120;
+    stroke-width: 1.7;
+    stroke-dasharray: 130;
     animation: ofa-travel 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .eco-node[data-state="on"] .eco-badge { transform: scale(1.22); }
+  .eco-node[data-state="on"] .eco-badge { transform: scale(1.16); }
   .eco-node[data-state="on"] .eco-ring {
+    fill: color-mix(in srgb, var(--color-accent) 8%, var(--color-paper));
     stroke: var(--color-accent);
-    stroke-width: 1.3;
+    stroke-width: 1.4;
   }
   .eco-node[data-state="on"] .eco-icon { color: var(--color-accent); }
-  .eco-node[data-state="on"] .eco-label { opacity: 1; fill: var(--color-ink); }
+  .eco-node[data-state="on"] .eco-label { opacity: 1; }
+  .eco-node[data-state="on"] .eco-num { opacity: 1; }
 
-  .eco-node[data-state="off"] .eco-badge { transform: scale(0.9); }
-  .eco-node[data-state="off"] .eco-ring { opacity: 0.28; }
-  .eco-node[data-state="off"] .eco-icon { opacity: 0.22; }
-  .eco-node[data-state="off"] .eco-label { opacity: 0.18; }
-  .eco-node[data-state="off"] .eco-spoke { opacity: 0.06; }
+  .eco-node[data-state="off"] .eco-ring { opacity: 0.55; }
+  .eco-node[data-state="off"] .eco-icon { opacity: 0.5; }
+  .eco-node[data-state="off"] .eco-label { opacity: 0.42; }
+  .eco-node[data-state="off"] .eco-num { opacity: 0.3; }
+  .eco-node[data-state="off"] .eco-spoke { opacity: 0.12; }
 
-  .eco-node[data-state="idle"] .eco-ring { opacity: 0.7; }
-  .eco-node[data-state="idle"] .eco-icon { opacity: 0.65; }
-  .eco-node[data-state="idle"] .eco-label { opacity: 0.45; }
-  .eco-node[data-state="idle"] .eco-spoke { opacity: 0.14; }
+  .eco-node[data-state="off"]:hover .eco-badge { transform: scale(1.06); }
+  .eco-node[data-state="off"]:hover .eco-ring { opacity: 0.9; }
+  .eco-node[data-state="off"]:hover .eco-icon { opacity: 0.85; }
+  .eco-node[data-state="off"]:hover .eco-label { opacity: 0.75; }
 
-  /* core reacts to selection */
   .eco-core {
     transform-box: fill-box;
     transform-origin: 50% 50%;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .eco-stage[data-live="true"] .eco-core { transform: scale(1.04); }
 
-  /* panel entrance, staggered */
   .eco-panel > * {
     opacity: 0;
     transform: translateY(12px);
@@ -419,31 +444,55 @@
   .eco-panel > *:nth-child(2) { animation-delay: 0.09s; }
   .eco-panel > *:nth-child(3) { animation-delay: 0.16s; }
   .eco-panel > *:nth-child(4) { animation-delay: 0.23s; }
-  .eco-panel > *:nth-child(5) { animation-delay: 0.3s; }
 
   @keyframes ofa-panel {
     to { opacity: 1; transform: none; }
   }
 
-  .eco-tag {
-    opacity: 0;
-    transform: translateX(-10px);
-    animation: ofa-tag 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    transition: color 0.35s ease, padding-left 0.35s ease;
-  }
   @keyframes ofa-tag {
     to { opacity: 1; transform: none; }
   }
-  .eco-tag:hover {
+
+  /* ---- Offering rows ---- */
+  .offer-row {
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: ofa-tag 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .offer-row:hover { padding-left: 0.6rem; }
+
+  .offer-name {
+    color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    transition: color 0.4s ease;
+  }
+  .offer-row[data-open="true"] .offer-name,
+  .offer-row:hover .offer-name { color: var(--color-ink); }
+
+  .offer-note {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: opacity 0.45s ease,
+      max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      margin-top 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .offer-row[data-open="true"] .offer-note {
+    opacity: 1;
+    max-height: 5rem;
+    margin-top: 0.5rem;
+  }
+
+  .offer-arrow {
+    color: color-mix(in srgb, var(--color-ink) 20%, transparent);
+    transition: color 0.4s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .offer-row[data-open="true"] .offer-arrow { color: var(--color-accent); }
+  .offer-row:hover .offer-arrow {
     color: var(--color-accent);
-    padding-left: 0.5rem;
-  }
-  .eco-tag-dash {
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
-  }
-  .eco-tag:hover .eco-tag-dash {
-    width: 2rem;
-    background-color: var(--color-accent);
+    transform: translateX(5px) translateY(0.25rem);
   }
 
   /* ---- Hero entrance ---- */
@@ -510,4 +559,21 @@
 
   @keyframes ofa-fade { to { opacity: 1; } }
   .node-in { opacity: 0; animation: ofa-fade 0.8s ease forwards; }
+  /* ---- Ghost number ---- */
+  .eco-ghost {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: ofa-ghost 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes ofa-ghost {
+    to { opacity: 1; transform: none; }
+  }
+    /* ---- Core float ---- */
+  @keyframes ofa-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-5px) scale(1.012); }
+  }
+  .core-float {
+    animation: ofa-float 7s ease-in-out infinite;
+  }
 }

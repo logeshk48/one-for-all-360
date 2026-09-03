@@ -1,10 +1,15 @@
+export type Offering = {
+  name: string;
+  note: string;
+};
+
 export type Industry = {
   num: string;
   name: string;
   short: string;
   tagline: string;
   body: string;
-  tags: string[];
+  offerings: Offering[];
 };
 
 export type SocialLink = {
@@ -70,10 +75,10 @@ export const concept = {
 };
 
 export const industriesSection = {
-  label: "02 — The Ecosystem",
   headline: ["One ecosystem.", "Multiple possibilities."],
   lead: "Multiple industries. One growing ecosystem.",
-  closingHeadline: "And we're just getting started.",
+  closingHeadline: ["And we're just", "getting started."],
+  closingBody: "Our ecosystem is expanding every day. More industries, more connections, more impact.",
   closingNote: "More industries are coming.",
 };
 
@@ -83,16 +88,26 @@ export const industries: Industry[] = [
     name: "Garments",
     short: "GARMENTS",
     tagline: "Designing comfort. Delivering quality.",
-    body: "Connecting products, sourcing and opportunities across the apparel ecosystem.",
-    tags: ["Products", "Manufacturing", "Sourcing", "Distribution"],
+    body: "Building better connections across fashion, textiles and apparel.",
+    offerings: [
+      { name: "Design", note: "From concept through to finished pattern." },
+      { name: "Production", note: "Manufacturing partners at every scale." },
+      { name: "Supply", note: "Fabric, trims and sourcing networks." },
+      { name: "Markets", note: "Routes to buyers and retailers." },
+    ],
   },
   {
     num: "02",
     name: "Construction",
     short: "CONSTRUCTION",
     tagline: "Building stronger. Building better.",
-    body: "Connecting products, materials, services and opportunities across construction.",
-    tags: ["Materials", "Services", "Supply", "Projects"],
+    body: "Connecting construction products, expertise and opportunities.",
+    offerings: [
+      { name: "Materials", note: "Sourcing what a project is built from." },
+      { name: "Solutions", note: "Technical expertise where it's needed." },
+      { name: "Projects", note: "Connecting capability to contracts." },
+      { name: "Partners", note: "Contractors, suppliers and specialists." },
+    ],
   },
   {
     num: "03",
@@ -100,33 +115,66 @@ export const industries: Industry[] = [
     short: "AGRICULTURE",
     tagline: "Growing today. Nourishing tomorrow.",
     body: "Connecting agricultural products, solutions and opportunities.",
-    tags: ["Produce", "Solutions", "Supply", "Markets"],
+    offerings: [
+      { name: "Produce", note: "Fresh, quality produce from farms to markets." },
+      { name: "Solutions", note: "Innovative solutions for modern agriculture." },
+      { name: "Supply", note: "Reliable supply chain and distribution." },
+      { name: "Markets", note: "Connecting buyers to growing opportunities." },
+    ],
   },
   {
     num: "04",
     name: "IT & Technology",
     short: "IT & TECHNOLOGY",
     tagline: "Innovating now. Transforming always.",
-    body: "Building connections through digital solutions, technology and innovation.",
-    tags: ["Software", "Systems", "Innovation", "Support"],
+    body: "Building technology connections that create smarter possibilities.",
+    offerings: [
+      { name: "Software", note: "Tools built for how businesses actually work." },
+      { name: "Technology", note: "Infrastructure that scales with growth." },
+      { name: "Solutions", note: "Applied answers to operational problems." },
+      { name: "Innovation", note: "What becomes possible next." },
+    ],
   },
   {
     num: "05",
     name: "Manufacturing",
     short: "MANUFACTURING",
     tagline: "Producing excellence. Powering progress.",
-    body: "Connecting production, sourcing, supply and business opportunities.",
-    tags: ["Production", "Sourcing", "Supply", "Partners"],
+    body: "Connecting manufacturing capabilities, products and global opportunities.",
+    offerings: [
+      { name: "Production", note: "Capacity matched to requirement." },
+      { name: "Machinery", note: "Equipment sourcing and support." },
+      { name: "Supply", note: "Raw materials and component networks." },
+      { name: "Markets", note: "Finding demand for what's produced." },
+    ],
   },
   {
     num: "06",
     name: "Services",
     short: "SERVICES",
     tagline: "Empowering people. Enriching lives.",
-    body: "Connecting people and businesses with the services they need.",
-    tags: ["Business", "Technical", "Logistics", "Support"],
+    body: "Connecting people, expertise and services across industries.",
+    offerings: [
+      { name: "Consulting", note: "Advice grounded in real operations." },
+      { name: "Professional", note: "Legal, financial and compliance support." },
+      { name: "Solutions", note: "Services shaped around the problem." },
+      { name: "Partners", note: "Providers vetted across the ecosystem." },
+    ],
   },
 ];
+
+export const journeySection = {
+  headline: ["Six stages.", "One continuous loop."],
+  lead: "How value moves through the ecosystem.",
+  stages: [
+    { num: "01", name: "Discover", body: "Find the products, services and partners that already exist across industries." },
+    { num: "02", name: "Source", body: "Connect directly with suppliers, manufacturers and producers." },
+    { num: "03", name: "Create", body: "Turn materials and capability into something worth selling." },
+    { num: "04", name: "Connect", body: "Link businesses that would never otherwise meet." },
+    { num: "05", name: "Distribute", body: "Move what's made to the markets that need it." },
+    { num: "06", name: "Grow", body: "Every connection opens the next opportunity." },
+  ],
+};
 
 export const areasSection = {
   headline: "One Platform. Multiple Possibilities.",

@@ -23,12 +23,32 @@ export default function IndustryGrid() {
           <EcosystemInteractive />
         </div>
 
-        <Reveal>
-          <div className="mt-24 flex flex-col gap-4 border-t border-mist pt-10 md:flex-row md:items-end md:justify-between">
-            <h3 className="display max-w-[16ch] text-[clamp(1.75rem,3.5vw,3rem)]">{industriesSection.closingHeadline}</h3>
-            <p className="eyebrow text-accent">{industriesSection.closingNote}</p>
+        <div className="mt-28 border-t border-mist pt-16 md:mt-40 md:pt-20">
+          <Reveal>
+            <div className="h-px w-14 bg-accent" aria-hidden="true" />
+          </Reveal>
+
+          <div className="mt-10 grid gap-y-10 lg:grid-cols-12 lg:gap-x-16">
+            <div className="lg:col-span-7">
+              <h3 className="display text-[clamp(2.25rem,6vw,5rem)]">
+                <RevealLine>{industriesSection.closingHeadline[0]}</RevealLine>
+                <RevealLine delay={110}>
+                  <span>getting <span className="text-accent">started.</span></span>
+                </RevealLine>
+              </h3>
+            </div>
+
+            <div className="lg:col-span-4 lg:col-start-9 lg:pt-4">
+              <Reveal delay={200}>
+                <p className="max-w-sm text-base leading-relaxed text-ink/50 md:text-lg">{industriesSection.closingBody}</p>
+              </Reveal>
+
+              <Reveal delay={280}>
+                <p className="eyebrow mt-10 text-accent">{industriesSection.closingNote}</p>
+              </Reveal>
+            </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
