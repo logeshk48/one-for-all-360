@@ -11,9 +11,16 @@ const R_CORE = 84;
 const ANGLES = [-90, -30, 30, 90, 150, 210];
 const DEFAULT_INDEX = 0;
 
+function round(n: number) {
+  return Math.round(n * 100) / 100;
+}
+
 function point(angle: number, radius: number) {
   const rad = (angle * Math.PI) / 180;
-  return { x: CX + radius * Math.cos(rad), y: CY + radius * Math.sin(rad) };
+  return {
+    x: round(CX + radius * Math.cos(rad)),
+    y: round(CY + radius * Math.sin(rad)),
+  };
 }
 
 const nodes = industries.map((industry, i) => {
@@ -39,6 +46,8 @@ const nodes = industries.map((industry, i) => {
 
   return { ...industry, outer, from, to, anchor, labelX, labelY };
 });
+
+const dots = ANGLES.map((angle) => ({ angle, p: point(angle + 30, R_CORE + 52) }));
 
 export default function EcosystemInteractive() {
   const [selected, setSelected] = useState(DEFAULT_INDEX);
@@ -88,10 +97,9 @@ export default function EcosystemInteractive() {
             <circle cx={CX} cy={CY} r={R_CORE + 52} fill="none" stroke="var(--color-ink)" strokeWidth="1" strokeDasharray="2 10" opacity="0.22" className="ring-rotate" />
             <circle cx={CX} cy={CY} r={R_CORE + 100} fill="none" stroke="var(--color-ink)" strokeWidth="1" strokeDasharray="1 15" opacity="0.14" className="orbit-mid" />
 
-            {ANGLES.map((angle) => {
-              const p = point(angle + 30, R_CORE + 52);
-              return <circle key={angle} cx={p.x} cy={p.y} r="1.8" fill="var(--color-accent)" opacity="0.35" />;
-            })}
+            {dots.map((dot) => (
+              <circle key={dot.angle} cx={dot.p.x} cy={dot.p.y} r="1.8" fill="var(--color-accent)" opacity="0.35" />
+            ))}
 
             {nodes.map((node, i) => {
               const state = selected === i ? "on" : "off";
@@ -131,10 +139,7 @@ export default function EcosystemInteractive() {
           </svg>
 
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <div
-              className="core-float flex flex-col items-center"
-              style={{ transform: "translateY(" + ((CY - 320) / 640) * 100 + "%)" }}
-            >
+            <div className="core-float flex flex-col items-center">
               <img src="/logo.svg" alt="" className="w-[13%] min-w-[76px] max-w-[104px]" />
               <span className="mt-1 text-[0.7rem] font-semibold tracking-[-0.02em] md:text-sm">
                 <span className="text-ink">360</span><span className="text-accent">°</span>

@@ -81,6 +81,24 @@
     background: linear-gradient(to right, transparent, rgba(10, 10, 10, 0.1) 22%, rgba(10, 10, 10, 0.1) 78%, transparent);
   }
 
+  /* ---- Hero earth ---- */
+  .earth-in {
+    opacity: 0;
+    animation: ofa-earth 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+  @keyframes ofa-earth {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  
+  .earth-img {
+    opacity: 0.65;
+    filter: saturate(0.8);
+  }
+
+  
+
   /* ---- Type ---- */
   .display {
     font-weight: 600;
@@ -143,6 +161,7 @@
   .pill-line {
     border-color: color-mix(in srgb, var(--color-ink) 20%, transparent);
     color: var(--color-ink);
+    background-color: color-mix(in srgb, var(--color-paper) 70%, transparent);
   }
   .pill-line:hover { color: #ffffff; border-color: var(--color-accent); }
 
@@ -348,6 +367,23 @@
   .drift { animation: ofa-drift 18s ease-in-out infinite; }
   .drift-slow { animation: ofa-drift 26s ease-in-out infinite; }
 
+  /* ---- Core float ---- */
+  @keyframes ofa-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-5px) scale(1.012); }
+  }
+  .core-float { animation: ofa-float 7s ease-in-out infinite; }
+
+  /* ---- Ghost number ---- */
+  .eco-ghost {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: ofa-ghost 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes ofa-ghost {
+    to { opacity: 1; transform: none; }
+  }
+
   /* ---- Interactive ecosystem ---- */
   .eco-node { cursor: pointer; }
 
@@ -429,11 +465,6 @@
   .eco-node[data-state="off"]:hover .eco-ring { opacity: 0.9; }
   .eco-node[data-state="off"]:hover .eco-icon { opacity: 0.85; }
   .eco-node[data-state="off"]:hover .eco-label { opacity: 0.75; }
-
-  .eco-core {
-    transform-box: fill-box;
-    transform-origin: 50% 50%;
-  }
 
   .eco-panel > * {
     opacity: 0;
@@ -559,21 +590,4 @@
 
   @keyframes ofa-fade { to { opacity: 1; } }
   .node-in { opacity: 0; animation: ofa-fade 0.8s ease forwards; }
-  /* ---- Ghost number ---- */
-  .eco-ghost {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: ofa-ghost 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  @keyframes ofa-ghost {
-    to { opacity: 1; transform: none; }
-  }
-    /* ---- Core float ---- */
-  @keyframes ofa-float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50%      { transform: translateY(-5px) scale(1.012); }
-  }
-  .core-float {
-    animation: ofa-float 7s ease-in-out infinite;
-  }
 }

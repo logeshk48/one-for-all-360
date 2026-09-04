@@ -7,6 +7,10 @@ const stroke = {
   pathLength: 1,
 };
 
+function r2(n: number) {
+  return Math.round(n * 100) / 100;
+}
+
 function Weave() {
   return (
     <g>
@@ -43,10 +47,10 @@ function Gear() {
       <circle {...stroke} cx="0" cy="0" r="11" className="sketch" style={{ animationDelay: "1.9s" }} />
       {ticks.map((angle, i) => {
         const rad = (angle * Math.PI) / 180;
-        const x1 = 30 * Math.cos(rad);
-        const y1 = 30 * Math.sin(rad);
-        const x2 = 42 * Math.cos(rad);
-        const y2 = 42 * Math.sin(rad);
+        const x1 = r2(30 * Math.cos(rad));
+        const y1 = r2(30 * Math.sin(rad));
+        const x2 = r2(42 * Math.cos(rad));
+        const y2 = r2(42 * Math.sin(rad));
         return <path key={angle} {...stroke} d={"M" + x1 + " " + y1 + " L" + x2 + " " + y2} className="sketch" style={{ animationDelay: 1.8 + i * 0.04 + "s" }} />;
       })}
     </g>
